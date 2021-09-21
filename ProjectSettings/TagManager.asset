@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Scane
   - Players
+  - Cube
+  - Target
   layers:
   - Default
   - TransparentFX
@@ -13,9 +15,9 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Cube
+  - Players
+  - Target
   - 
   - 
   - 

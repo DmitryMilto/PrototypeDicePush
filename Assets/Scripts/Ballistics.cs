@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class Ballistics : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> objects = new List<GameObject>();
     public Transform SpawnTransform;
     public Transform TargetTransform;
 
@@ -18,7 +17,7 @@ public class Ballistics : MonoBehaviour
         SpawnTransform.localEulerAngles = new Vector3(-AngleInDegrees, 0f, 0f);
     }
 
-    public void Shot()
+    public GameObject Shot(bool isPlayer)
     {
         Vector3 fromTo = TargetTransform.position - transform.position;
         Vector3 fromToXZ = new Vector3(fromTo.x, 0f, fromTo.z);
@@ -33,34 +32,9 @@ public class Ballistics : MonoBehaviour
         float v2 = (g * x * x) / (2 * (y - Mathf.Tan(AngleInRadians) * x) * Mathf.Pow(Mathf.Cos(AngleInRadians), 2));
         float v = Mathf.Sqrt(Mathf.Abs(v2));
 
-        GameObject newBullet = Instantiate(Bullet, SpawnTransform.position, Quaternion.identity);
+        GameObject newBullet = Instantiate(Bullet, SpawnTransform.position, Quaternion.Euler(Random.RandomRange(0f, 180f), Random.RandomRange(0f, 180f), Random.RandomRange(0f, 180f)));
         newBullet.GetComponent<Rigidbody>().velocity = SpawnTransform.forward * v;
-        objects.Add(newBullet);
+        newBullet.GetComponent<CubeManager>().isPlayerShot = isPlayer;
+        return newBullet;
     }
-    public List<GameObject> get => objects;
-
-    //private void CubePlayer()
-    //{
-    //    foreach (GameObject game in objects)
-    //    {
-    //        if (game.GetComponent<CubeManager>())
-    //        {
-    //            CubeManager manager = game.GetComponent<CubeManager>();
-    //            manager.SetPosition(game.transform.position);
-
-    //            if (manager.isRotate)
-    //            {
-    //                game.transform.Rotate(new Vector3(45, 30, 45) * Time.deltaTime);
-    //            }
-    //            else
-    //            {
-    //                if (game.GetComponent<Rigidbody>().velocity == Vector3.zero)
-    //                {
-    //                    //Destroy(game);
-    //                    //objects.Clear();
-    //                }
-    //            }
-    //        }
-    //    }
-    //}
 }
